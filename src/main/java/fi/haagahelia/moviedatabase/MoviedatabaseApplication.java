@@ -12,7 +12,8 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-
+import fi.haagahelia.moviedatabase.domain.LatestMovie;
+import fi.haagahelia.moviedatabase.domain.LatestMovieRepository;
 import fi.haagahelia.moviedatabase.domain.MovieList;
 import fi.haagahelia.moviedatabase.domain.MovieListRepository;
 
@@ -32,7 +33,7 @@ public class MoviedatabaseApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner run(RestTemplate restTemplate, MovieListRepository moviesrepo) throws Exception {
+	public CommandLineRunner run(RestTemplate restTemplate, MovieListRepository moviesrepo, LatestMovieRepository lrepo) throws Exception {
 		return args -> {
 			String result = restTemplate.getForObject(
 					"https://api.themoviedb.org/3/movie/popular?api_key=9cf94028fec53093dbf929b47de035b3", String.class);
@@ -50,6 +51,26 @@ public class MoviedatabaseApplication {
 				String year= movieJson.getString("release_date");
 				String overview = movieJson.getString("overview");
 				moviesrepo.save(new MovieList(title, year,overview));
+				
+				
+				
+			}
+			String result1 = restTemplate.getForObject(
+					"https://api.themoviedb.org/3/movie/now_playing?api_key=9cf94028fec53093dbf929b47de035b3", String.class);
+			System.out.println("the length is " +result);
+			
+			JSONObject root1 = new JSONObject(result1);
+			
+			JSONArray results2 = root1.getJSONArray("results");
+			
+			for(int i=0; i < results.length(); i++ ) {
+				JSONObject movieJson = results2.getJSONObject(i);
+				// movies that we will populate from json data fetched from api (String title, float vote_average, String release_date, String overview
+				
+				String title= movieJson.getString("title");
+				String year= movieJson.getString("release_date");
+				String overview = movieJson.getString("overview");
+				lrepo.save(new LatestMovie(title, year,overview));
 				
 				
 				

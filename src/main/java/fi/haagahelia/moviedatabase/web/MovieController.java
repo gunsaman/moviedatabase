@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
+import fi.haagahelia.moviedatabase.domain.LatestMovieRepository;
 import fi.haagahelia.moviedatabase.domain.MovieList;
 import fi.haagahelia.moviedatabase.domain.MovieListRepository;
 import fi.haagahelia.moviedatabase.domain.PlayListRepository;
@@ -30,6 +31,8 @@ public class MovieController {
 	private MovieListRepository movies;
 	@Autowired
 	private PlayListRepository pmovies;
+	@Autowired
+	private LatestMovieRepository lmovies;
 	
 	
 	  @RequestMapping(value={"/movieList", "/"})
@@ -37,6 +40,14 @@ public class MovieController {
 		  
 		  model.addAttribute("movielist", movies.findAll()) ; return
 	  "movieList";
+	  
+	  }
+	  
+	  @RequestMapping(value={"/latest"})
+	  public String latest(Model model) { 
+		  
+		  model.addAttribute("movielist", lmovies.findAll()) ; 
+		  return "movieList";
 	  
 	  }
 	  @RequestMapping(value={"/details/{id}"}) 
