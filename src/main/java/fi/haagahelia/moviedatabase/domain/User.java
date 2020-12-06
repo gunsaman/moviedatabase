@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name ="usertable")
 public class User {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
