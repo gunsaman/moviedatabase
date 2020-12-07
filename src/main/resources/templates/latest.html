@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<div>
-		<h1 style="text-align:center">Upcoming Movie database</h1>
+		<h1 style="text-align:center">Latest Movie database </h1>
 		
 		
 		</div>
@@ -31,14 +31,11 @@
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link" href="/add"><button class="btn btn-success">add new movie</button></a>
-		  </li>
-		  
+		  </li>	  
 		  
 				<form th:action="@{/logout}" method="post">
 					<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-				</form>
-		
-			
+				</form>			
 		  
 		 
 	</ul>
@@ -65,9 +62,9 @@
 							<td class="" th:text="${movie.release_date}"></td>
 	<!-- 						<td th:text="${movie.overview}"></td> -->
 							
-							<td class="bg-warning"><a th:href="@{/details/{id}(id=${movie.id})}"  class="btn btn-outline">details</a></td>
+							<td class="bg-warning"><a th:href="@{/detail/{id}(id=${movie.id})}"  class="btn btn-outline">details</a></td>
 							
-							<td><a th:href="@{/addPlaylist/{id}(id=${movie.id})}"  class="btn btn-primary">Add</a></td> 
+							<td><a th:href="@{/addPlaylists/{id}(id=${movie.id})}"  class="btn btn-primary">Add</a></td> 
 						</tr>
 					</tbody>		
 					</table>

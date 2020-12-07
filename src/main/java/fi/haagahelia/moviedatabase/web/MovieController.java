@@ -60,7 +60,7 @@ public class MovieController {
 	  public String latest(Model model) { 
 		  
 		  model.addAttribute("movielist", lmovies.findAll()) ; 
-		  return "movieList";
+		  return "latest";
 	  
 	  }
 	  
@@ -68,8 +68,15 @@ public class MovieController {
 	  @RequestMapping(value={"/details/{id}"}) 
 	  public String movieDetails(@PathVariable("id") Long id, Model model) { 
 		   model.addAttribute("movieDetail", movies.findById(id).get()) ; 
-		   
+		  		   
 		  return  "details";
+	  
+	  }
+	  @RequestMapping(value={"/detail/{id}"}) 
+	  public String movieDetail(@PathVariable("id") Long id, Model model) { 
+		   model.addAttribute("movieDetail", lmovies.findById(id).get()) ; 
+		  		   
+		  return  "detail";
 	  
 	  }
 	  
@@ -132,6 +139,20 @@ public class MovieController {
 		return "redirect:../movieList";
 		
 	}
+	@RequestMapping(value="/addPlaylists/{id}")
+	public String addPlay2(@PathVariable("id") Long id, Model model) {
+		Optional<LatestMovie> result = lmovies.findById(id);
+		// check if data is present
+		if(result.isPresent()) {
+			// get data from result to playlist entity
+			LatestMovie favouriteMovie = result.get();
+			
+			pmovies.save(new Playlist(favouriteMovie.getTitle(), favouriteMovie.getRelease_date(), favouriteMovie.getOverview()));
+			}				
+		
+		return "redirect:../latest";
+		
+	}
 	
 	 // save a new movie
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -146,6 +167,11 @@ public class MovieController {
         return "redirect:../playlist";
     }    
     
+    @RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
+    public String resetPwd(Model model) {
+    	
+        return "reset_password_form";
+    }    
 	/*
 	 * //handling pagination
 	 * 
