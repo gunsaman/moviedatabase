@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
@@ -19,14 +23,17 @@ public class MovieList{
 	@Column(length=1000)
 	private String overview;
 	
-	
+	@ManyToOne
+	@JoinColumn(name ="id")
+	private Playlist list;	
+	// default movie constructor without parameter
 	public MovieList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	
-
+	// movie constructor using parameters
 	public MovieList(String title, String release_date, String overview) {
 		super();
 		this.title = title;
@@ -34,6 +41,14 @@ public class MovieList{
 		this.overview = overview;
 	}
 
+
+	public MovieList(String title, String release_date, String overview, Playlist list) {
+		super();
+		this.title = title;
+		this.release_date = release_date;
+		this.overview = overview;
+		this.list = list;
+	}
 
 
 	public Long getId() {
@@ -76,6 +91,16 @@ public class MovieList{
 
 	public void setOverview(String overview) {
 		this.overview = overview;
+	}
+
+
+	public Playlist getList() {
+		return list;
+	}
+
+
+	public void setList(Playlist list) {
+		this.list = list;
 	}
 
 

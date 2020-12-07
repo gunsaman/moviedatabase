@@ -3,26 +3,22 @@ package fi.haagahelia.moviedatabase.web;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import fi.haagahelia.moviedatabase.domain.LatestMovie;
 import fi.haagahelia.moviedatabase.domain.LatestMovieRepository;
 import fi.haagahelia.moviedatabase.domain.MovieList;
 import fi.haagahelia.moviedatabase.domain.MovieListRepository;
 import fi.haagahelia.moviedatabase.domain.PlayListRepository;
 import fi.haagahelia.moviedatabase.domain.Playlist;
-import fi.haagahelia.moviedatabase.service.MovieService;
+
 
 @Controller
 public class MovieController {
@@ -34,6 +30,23 @@ public class MovieController {
 	@Autowired
 	private LatestMovieRepository lmovies;
 	
+	
+	 //RESTful service to get all the books:
+    @RequestMapping(value="/upcoming-movies", method = RequestMethod.GET)
+    public @ResponseBody List<LatestMovie> latestMovies(){
+    	return (List<LatestMovie>) lmovies.findAll();
+    }
+    
+    @RequestMapping(value="/latest-movies", method = RequestMethod.GET)
+    public @ResponseBody List<MovieList> upcomingMovies(){
+    	return (List<MovieList>) movies.findAll();
+    }
+    
+    // RESTful service For searching book by Id
+    @RequestMapping(value="/latest/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<LatestMovie> findlatestMovie(@PathVariable("id") Long id){
+    	return lmovies.findById(id);
+    }
 	// adding movies to the model and passing it to the view layer.
 	  @RequestMapping(value={"/movieList", "/"})
 	  public String movieList(Model model) { 

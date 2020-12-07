@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -26,7 +28,9 @@ public class Playlist {
 	@Column(length=1000)
 	private String overview;
 	
-	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="list")
+	private List<MovieList>movies;
 	
 	public Playlist() {
 		

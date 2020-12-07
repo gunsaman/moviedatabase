@@ -32,17 +32,22 @@ public class User {
     @Column(name = "userEmail", nullable = false)
     private String userEmail;
     
+    @Column(name="reset_password_token")
+    private String resetPasswordToken;
    
     
     public User() {
     }
 
-	public User(String username, String passwordHash, String role) {
+	
+	public User(String username, String passwordHash, String role, String userEmail) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.role = role;
+		this.userEmail = userEmail;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -83,6 +88,17 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+
+	public String getResetPasswordToket() {
+		return resetPasswordToken;
+	}
+
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
+	
 
 	
 	

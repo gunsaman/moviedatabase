@@ -26,7 +26,7 @@ public class LatestMovie{
 	}
 
 	
-
+	// Latest Movie object constructor
 	public LatestMovie(String title, String release_date, String overview) {
 		super();
 		this.title = title;
