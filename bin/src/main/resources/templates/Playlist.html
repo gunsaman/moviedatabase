@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>playlist</title>
+<meta http-equiv="Content-Type" content="text/html" charset="ISO-8859-1">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+	<h1>Hello welcome to play list</h1>
+	<div class="col-md-4">
+		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	<div class="row">
+			<div class ="col-12">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" class="btn btn-danger float-right"/> <br><br>
+				
+			</form>
+			</div>
+			<div class="col-12">
+			<a th:href="@{/movieList}" class="btn btn-outline-primary float-right">Back</a>
+			</div>
+	</div>
+	
+	<div class="row align-items-center" ><a href="/add" class="btn btn-success">Add a Movie</a></div>
+	
+	<table class="table table-striped">
+		<tbody>
+		<tr>
+		    <th>Movie</th>
+		    <th>Release Year</th>
+		    <th>overview</th>
+		</tr>
+			<tr th:each = "movie : ${playlist}">
+				<td th:text="${movie.title}"></td>				
+				<td th:text="${movie.release_date}"></td>
+				<td th:text="${movie.overview}"></td>
+				<td><a th:href="@{/delete/{id}(id=${movie.id})}"  class="btn btn-primary">Delete</a></td> 
+			</tr>
+			
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

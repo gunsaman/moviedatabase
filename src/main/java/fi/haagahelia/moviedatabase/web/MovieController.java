@@ -34,7 +34,7 @@ public class MovieController {
 	@Autowired
 	private LatestMovieRepository lmovies;
 	
-	
+	// adding movies to the model and passing it to the view layer.
 	  @RequestMapping(value={"/movieList", "/"})
 	  public String movieList(Model model) { 
 		  
@@ -42,7 +42,7 @@ public class MovieController {
 	  "movieList";
 	  
 	  }
-	  
+	// adding latest movies to the model and passing it to the view layer.
 	  @RequestMapping(value={"/latest"})
 	  public String latest(Model model) { 
 		  
@@ -50,6 +50,8 @@ public class MovieController {
 		  return "movieList";
 	  
 	  }
+	  
+	  // getting detail view of  a movie from 
 	  @RequestMapping(value={"/details/{id}"}) 
 	  public String movieDetails(@PathVariable("id") Long id, Model model) { 
 		   model.addAttribute("movieDetail", movies.findById(id).get()) ; 
@@ -57,6 +59,7 @@ public class MovieController {
 		  return  "details";
 	  
 	  }
+	  
 //	  @RequestMapping("/upcoming")
 //		public String upcoming(RestTemplate restTemplate, Model model) {
 //		  String result = restTemplate.getForObject(
@@ -78,23 +81,30 @@ public class MovieController {
 	 * 
 	 * }
 	 */
+	  
+	  // displaying playlist created by user to the view
 	@RequestMapping("/playlist")
 	public String Playlist(Model model) {
 		model.addAttribute("playlist", pmovies.findAll()) ;
 		return "Playlist";
 		
 	}
+	
+	// add a new movie  by user if not found in the database
 	@RequestMapping("/add")
 	public String addMovie(Model model) {
 		model.addAttribute("movie", new MovieList());
 		return "addMovie";
 		
 	}
+	
+	
 	  @RequestMapping(value="/login")
 	    public String login() {	
 	        return "login";
 	    }	
 	
+	  // adding a movie to the playlist 
 	@RequestMapping(value="/addPlaylist/{id}")
 	public String addPlay(@PathVariable("id") Long id, Model model) {
 		Optional<MovieList> result = movies.findById(id);
@@ -110,13 +120,13 @@ public class MovieController {
 		
 	}
 	
-	 //save book
+	 // save a new movie
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(MovieList movie){
         movies.save(movie);
         return "redirect:movieList";
     }  
-    
+    // deleted a movie 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long id, Model model) {
     	pmovies.deleteById(id);

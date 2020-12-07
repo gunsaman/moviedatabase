@@ -56,7 +56,7 @@ public class MoviedatabaseApplication {
 				
 			}
 			String result1 = restTemplate.getForObject(
-					"https://api.themoviedb.org/3/movie/now_playing?api_key=9cf94028fec53093dbf929b47de035b3", String.class);
+					"https://api.themoviedb.org/3/movie/upcoming?api_key=9cf94028fec53093dbf929b47de035b3", String.class);
 			System.out.println("the length is " +result);
 			
 			JSONObject root1 = new JSONObject(result1);
